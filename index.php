@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+    <?php 
+        setcookie("username", "marcin", time() + (86400 * 7), "/");
+
+        if (isset($_COOKIE["username"])) {
+            echo "Witaj, ". $_COOKIE["username"]. "<br>";
+        }
+
+    ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +15,12 @@
 </head>
 <body>
     <?php
+
+        if (isset($_COOKIE["preferedColor"])) {
+            echo '<body style="background-color:$_COOKIE["preferedColor"]">';
+        } else {
+            echo "Brak preferowanego koloru strony DOMYŚLNY: white<br><br>";
+        }
 
         $name = "Sebastian";
         $age = 15;
@@ -154,6 +168,47 @@
             echo "<br>$key";
         }
 
+        function sayHello() {
+            return "Witaj";
+        }
+
+        function multiply($a, $b) {
+            return $a * $b;
+        }
+
+        function isEven($n) {
+            return ($n % 2 == 0) ? TRUE : FALSE;
+        }
+
+        function formatPrice($price) {
+            return round($price);
+        }
+
+        function greetUser($name, $age) {
+            return "Witaj $name, masz $age lat";
+        }
+
+        echo sayHello();
+        echo multiply(2, 5);
+        echo isEven(5);
+        echo formatPrice(100.0129122);
+        echo greetUser("elosfjbh", 1515357287);
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['preferedColor'])) {
+            setcookie("preferedColor", $_POST['color'], time() + (86400 * 7), "/");
+        }
+
     ?>
+
+    <form action="index.php" method="post">
+        <label for="color">Preferowany kolor strony:</label>
+        <select id="color" name="color" required>
+        <option value="">Wybierz</option>
+        <option value="black">Czarny</option>
+        <option value="white">Biały</option>
+        </select>
+        <button type="submit" name="preferedColor">Zastosuj</button>
+    </form>
+
 </body>
 </html>
