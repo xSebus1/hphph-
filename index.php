@@ -7,20 +7,27 @@
             echo "Witaj, ". $_COOKIE["username"]. "<br>";
         }
 
+        if (!isset($_COOKIE["preferedColor"])) {
+            $color = "white";
+            $textColor = "black";
+        } else {
+            $color = $_COOKIE["preferedColor"];
+            $textColor = "white";
+        }
+
+        if ($color == "white") {
+            $textColor = "black";
+        }
+
+
     ?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body style="background-color: <?= htmlspecialchars($color) ?>; color: <?= htmlspecialchars($textColor) ?>;">
     <?php
-
-        if (isset($_COOKIE["preferedColor"])) {
-            echo '<body style="background-color:$_COOKIE["preferedColor"]">';
-        } else {
-            echo "Brak preferowanego koloru strony DOMYŚLNY: white<br><br>";
-        }
 
         $name = "Sebastian";
         $age = 15;
@@ -196,6 +203,7 @@
 
         if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['preferedColor'])) {
             setcookie("preferedColor", $_POST['color'], time() + (86400 * 7), "/");
+            header("location:index.php");
         }
 
     ?>
